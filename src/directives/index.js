@@ -11,6 +11,7 @@ export const lazyPlugin = {
             console.log(isIntersecting)
             if (isIntersecting) {
               el.src = binding.value
+              // 在图片第一次加载之后，就停止这个事件的监听。
               stop()
             }
           },
