@@ -23,7 +23,7 @@ httpInstance.interceptors.request.use(config => {
 // axios响应式拦截器
 httpInstance.interceptors.response.use(res => res.data, e => {
   const userStore = useUserStore()
-  const router = userStore()
+  const router = useRouter()
   // 统一错误处理
   ElMessage({
     type: 'warning',
