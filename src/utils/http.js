@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { useUserStore } from '@/stores/user'
 import { ElMessage } from 'element-plus'
-import { useRouter } from 'vue-router'
+import router from '@/router'
 
 
 // 创建axios实例
@@ -15,7 +15,8 @@ httpInstance.interceptors.request.use(config => {
   const userStore = useUserStore()
   const token = userStore.userInfo.token
   if (token) {
-    config.headers.token = `Bearer ${token}`
+    // 注意这里需要使用的是Authorization
+    config.headers.Authorization = `Bearer ${token}`
   }
   return config
 }, e => Promise.reject(e))
@@ -23,7 +24,6 @@ httpInstance.interceptors.request.use(config => {
 // axios响应式拦截器
 httpInstance.interceptors.response.use(res => res.data, e => {
   const userStore = useUserStore()
-  const router = useRouter()
   // 统一错误处理
   ElMessage({
     type: 'warning',
@@ -35,6 +35,7 @@ httpInstance.interceptors.response.use(res => res.data, e => {
   // 2. 跳转到登录页
   if (e.response.status === 401) {
     userStore.clearUserInfo()
+    console.log('111')
     router.push('/login')
   }
   return Promise.reject(e)
