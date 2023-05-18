@@ -1,7 +1,7 @@
-import request from '@/utils/http'
+import httpInstance from '@/utils/http'
 
 export const getDetail = (id) => {
-  return request({
+  return httpInstance({
     url: '/goods',
     params: {
       id
@@ -16,7 +16,7 @@ export const getDetail = (id) => {
  * @param {Number} limit - 获取个数
  */
 export const getHotGoodsAPI = ({ id, type, limit = 3 }) => {
-  return request({
+  return httpInstance({
     url: '/goods/hot',
     params: {
       id,
